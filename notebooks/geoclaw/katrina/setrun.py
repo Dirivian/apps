@@ -124,7 +124,7 @@ def setrun(claw_pkg='geoclaw'):
         clawdata.tfinal = days2seconds(katrina_landfall.days + 2) + katrina_landfall.seconds
 
         # Output files per day requested
-        recurrence = 24
+        recurrence = 6
         clawdata.num_output_times = int((clawdata.tfinal - clawdata.t0) *
                                         recurrence / (60**2 * 24))
 
@@ -257,7 +257,7 @@ def setrun(claw_pkg='geoclaw'):
 
     elif clawdata.checkpt_style == 2:
         # Specify a list of checkpoint times.  
-        clawdata.checkpt_times = [0.1,0.15]
+        clawdata.checkpt_times = [0.1, 0.15]
 
     elif clawdata.checkpt_style == 3:
         # Checkpoint every checkpt_interval timesteps (on Level 1)
@@ -328,7 +328,7 @@ def setrun(claw_pkg='geoclaw'):
     # == setgauges.data values ==
     gauges = rundata.gaugedata.gauges
     # for gauges append lines of the form  [gaugeno, x, y, t1, t2]
-    gauges.append([1, -89.5, 29.6,  rundata.clawdata.t0, rundata.clawdata.tfinal])
+    gauges.append([1, -88.270704,  29.671603,  rundata.clawdata.t0, rundata.clawdata.tfinal])
 
     #------------------------------------------------------------------
     # GeoClaw specific parameters:
@@ -397,8 +397,11 @@ def setgeo(rundata):
                               os.path.join(topo_path, 'gulf_caribbean.tt3')])
     # geodata.topofiles.append([3, 1, 3, 0., 1.e10, \
     #                           './bathy/gulf_coarse_bathy.tt3'])
-    topo_data.topofiles.append([3, 1, 5, rundata.clawdata.t0, rundata.clawdata.tfinal,
-                              os.path.join(topo_path, 'NewOrleans_3s.tt3')])
+    # topo_data.topofiles.append([3, 1, 5, rundata.clawdata.t0, rundata.clawdata.tfinal,
+    #                           os.path.join(topo_path, 'NewOrleans_3s.tt3')])
+    # topo_data.topofiles.append([4, 1, 5, rundata.clawdata.t0, rundata.clawdata.tfinal,
+    #                           os.path.join(topo_path, 'NewOrleans_3s.nc')])
+
 
     # == setqinit.data values ==
     rundata.qinit_data.qinit_type = 0
@@ -479,7 +482,8 @@ def get_topo(plot=False):
     # Fetch topography
     base_url = "https://dl.dropboxusercontent.com/u/8449354/bathy/"
     urls = [os.path.join(base_url, "gulf_caribbean.tt3.tar.bz2"),
-            os.path.join(base_url, "NewOrleans_3s.tt3.tar.bz2")]
+            os.path.join(base_url, "NewOrleans_3s.tt3.tar.bz2"),
+            os.path.join(base_url, "NewOrleans_3s.nc.tar.bz2")]
     for url in urls:
         data.get_remote_file(url, verbose=True)
 
